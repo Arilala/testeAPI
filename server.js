@@ -17,6 +17,8 @@ app.get('/', (req, res) => {
   res.json({ message: '' })
 })
 
+require('./app/routes/user.routes')(app)
+
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
