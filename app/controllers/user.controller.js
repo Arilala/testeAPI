@@ -3,6 +3,7 @@ const User = db.user
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const moment = require('moment')
 const { TokenExpiredError } = jwt
 const config = require('../config/auth.config')
 
@@ -54,6 +55,12 @@ exports.create = (req, res) => {
         message: "L'une ou plusieurs données obligatoire sont manquantes",
       })
     } else {
+      if (!moment(!date, 'YYYY-MM-DD', true).isValid()) {
+        return res.status(401).send({
+          error: true,
+          message: "l'un des données obligatoire ne sont pas conformes",
+        })
+      }
     }
 
     User.findOne({
